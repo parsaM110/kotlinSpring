@@ -1,4 +1,7 @@
 package com.kotlinspring.kotlinspringgitir.dto
 
-class CourseDTO {
-}
+data class CourseDTO (
+    val id : Int?,
+    val name : String,
+    val category: String,
+)

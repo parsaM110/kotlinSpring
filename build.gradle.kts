@@ -31,6 +31,8 @@ dependencies {
 
     //logging
     implementation("io.github.microutils:kotlin-logging-jvm:2.0.11")
+    implementation("com.h2database:h2")
+
 
     runtimeOnly("com.h2database:h2")
 //    runtimeOnly("org.postgresql:postgresql")

@@ -6,7 +6,9 @@ import org.springframework.stereotype.Service
 @Service
 class GreetingService {
 
-    @Value("\${message}")
-    lateinit var message : String
-    fun retrieveGreeting(name : String) = "Hello $name , $message"
+//    @Value("\${message}")
+//    lateinit var message : String
+//    fun retrieveGreeting(name : String) = "Hello $name , $message"
+
+    fun retrieveGreeting(name : String) = "Hello $name "
 }
