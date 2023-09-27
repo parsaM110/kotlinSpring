@@ -1,6 +1,6 @@
 package com.kotlinspring.kotlinspringgitir.controller
 
-import com.kotlinspring.kotlinspringgitir.service.GreetingsService
+import com.kotlinspring.kotlinspringgitir.service.GreetingService
 import mu.KLogging
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/v1/greetings")
-class GreetingController(val greetingsService: GreetingsService) {
+class GreetingController(val greetingService: GreetingService) {
 
     companion object : KLogging()
 
@@ -17,6 +17,6 @@ class GreetingController(val greetingsService: GreetingsService) {
     fun  retrieveGreeting(@PathVariable("name") name:String) : String{
 //        return "Hello $name"
         logger.info("Name is $name")
-        return greetingsService.retrieveGreeting(name)
+        return greetingService.retrieveGreeting(name)
     }
 }
