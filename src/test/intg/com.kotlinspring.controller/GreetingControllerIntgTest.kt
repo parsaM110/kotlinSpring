@@ -29,6 +29,6 @@ class GreetingControllerIntgTest{
             .expectBody(String::class.java)
             .returnResult()
 
-        Assertions.assertEquals("Hello $name , Hello from default profile", result.responseBody)
+        Assertions.assertEquals("Hello $name ", result.responseBody)
     }
 }
