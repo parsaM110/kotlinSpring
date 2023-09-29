@@ -77,7 +77,7 @@ class CourseControllerIntgTest {
     }
 
     @Test
-    fun retrieveGreeting() {
+    fun addCourse() {
 
         val courseDTO = CourseDTO(null, "Build Restful APIs", "Dilip")
 
