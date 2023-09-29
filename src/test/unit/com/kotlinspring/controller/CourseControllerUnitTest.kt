@@ -1,6 +1,7 @@
 package com.kotlinspring.kotlinspringgitir.controller
 
 import com.kotlinspring.kotlinspringgitir.dto.CourseDTO
+import com.kotlinspring.kotlinspringgitir.entity.Course
 import com.kotlinspring.kotlinspringgitir.service.CourseService
 import com.kotlinspring.kotlinspringgitir.service.GreetingService
 import com.kotlinspring.util.courseDTO
@@ -70,4 +71,36 @@ class CourseControllerUnitTest {
         Assertions.assertEquals(2, courseDTOs!!.size)
 
     }
+
+    @Test
+    fun updateCourse(){
+
+        //existing Course
+
+        val course = Course(null,
+            "Build RestFul APis using SpringBoot and Kotlin", "Development")
+
+
+        every { courseServiceMockk.updateCourse(any(), any())} returns  courseDTO(id = 100,"Build RestFul APis using SpringBoot and Kotlin1")
+
+
+        val updateCourseDTO = Course(null,
+            "Build RestFul APis using SpringBoot and Kotlin1", "Development")
+
+
+
+        //Update CourseDTO
+
+        val updatedCourse = webTestClient.put()
+            .uri("/v1/courses/{courseId}",100)
+            .bodyValue(updateCourseDTO)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CourseDTO::class.java)
+            .returnResult()
+            .responseBody
+
+        Assertions.assertEquals("Build RestFul APis using SpringBoot and Kotlin1", updatedCourse!!.name)
+    }
+
 }
