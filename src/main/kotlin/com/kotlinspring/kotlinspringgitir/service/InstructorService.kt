@@ -4,6 +4,7 @@ import com.kotlinspring.kotlinspringgitir.dto.InstructorDTO
 import com.kotlinspring.kotlinspringgitir.entity.Instructor
 import com.kotlinspring.kotlinspringgitir.repository.InstructorRepository
 import org.springframework.stereotype.Service
+import java.util.*
 
 
 @Service
@@ -19,6 +20,11 @@ class InstructorService(val instructorRepository : InstructorRepository) {
         return instructorEntity.let{
             InstructorDTO(it.id,it.name)
         }
+    }
+
+    fun findByInstructorId(instructorId: Int): Optional<Instructor> {
+
+        return instructorRepository.findById(instructorId)
     }
 
 }
