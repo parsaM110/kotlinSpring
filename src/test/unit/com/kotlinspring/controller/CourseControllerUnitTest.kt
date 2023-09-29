@@ -17,7 +17,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 
 @AutoConfigureWebTestClient
 @WebMvcTest(controllers = [CourseController::class])
-class CourseControllerUnitTest{
+class CourseControllerUnitTest {
 
     @Autowired
     lateinit var webTestClient: WebTestClient
@@ -30,7 +30,7 @@ class CourseControllerUnitTest{
 
         val courseDTO = CourseDTO(null, "Build Restful APIs", "Dilip")
 
-        every { courseServiceMockk.addCourse(any())} returns courseDTO(id = 1)
+        every { courseServiceMockk.addCourse(any()) } returns courseDTO(id = 1)
 
 
         val savedCourseDTO = webTestClient.post()
@@ -45,5 +45,29 @@ class CourseControllerUnitTest{
         Assertions.assertTrue {
             savedCourseDTO!!.id != null
         }
+    }
+
+    @Test
+    fun retrieveAllCourses() {
+
+        every { courseServiceMockk.retrieveAllCourses() }.returnsMany(
+            listOf(
+                courseDTO(id = 1),
+                courseDTO(id = 2, name = "Build Reactive Microservices using Spring WebFlux/SpringBoot")
+            )
+        )
+
+        val courseDTOs = webTestClient.get()
+            .uri("/v1/courses")
+            .exchange()
+            .expectStatus().isOk
+            .expectBodyList(CourseDTO::class.java)
+            .returnResult()
+            .responseBody
+
+
+        println("CourseDTOs : $courseDTOs")
+        Assertions.assertEquals(2, courseDTOs!!.size)
+
     }
 }
