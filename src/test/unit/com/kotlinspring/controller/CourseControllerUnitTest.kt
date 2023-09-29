@@ -51,6 +51,23 @@ class CourseControllerUnitTest {
     }
 
     @Test
+    fun addCourse_validation() {
+
+        val courseDTO = CourseDTO(null, "", "")
+
+        every { courseServiceMockk.addCourse(any()) } returns courseDTO(id = 1)
+
+
+        val savedCourseDTO = webTestClient.post()
+            .uri("/v1/courses")
+            .bodyValue(courseDTO)
+            .exchange()
+            .expectStatus().isBadRequest
+
+
+    }
+
+    @Test
     fun retrieveAllCourses() {
 
         every { courseServiceMockk.retrieveAllCourses() }.returnsMany(
@@ -75,26 +92,32 @@ class CourseControllerUnitTest {
     }
 
     @Test
-    fun updateCourse(){
+    fun updateCourse() {
 
         //existing Course
 
-        val course = Course(null,
-            "Build RestFul APis using SpringBoot and Kotlin", "Development")
+        val course = Course(
+            null,
+            "Build RestFul APis using SpringBoot and Kotlin", "Development"
+        )
 
 
-        every { courseServiceMockk.updateCourse(any(), any())} returns  courseDTO(id = 100,"Build RestFul APis using SpringBoot and Kotlin1")
+        every { courseServiceMockk.updateCourse(any(), any()) } returns courseDTO(
+            id = 100,
+            "Build RestFul APis using SpringBoot and Kotlin1"
+        )
 
 
-        val updateCourseDTO = Course(null,
-            "Build RestFul APis using SpringBoot and Kotlin1", "Development")
-
+        val updateCourseDTO = Course(
+            null,
+            "Build RestFul APis using SpringBoot and Kotlin1", "Development"
+        )
 
 
         //Update CourseDTO
 
         val updatedCourse = webTestClient.put()
-            .uri("/v1/courses/{courseId}",100)
+            .uri("/v1/courses/{courseId}", 100)
             .bodyValue(updateCourseDTO)
             .exchange()
             .expectStatus().isOk
@@ -106,12 +129,12 @@ class CourseControllerUnitTest {
     }
 
     @Test
-    fun deleteCourse(){
+    fun deleteCourse() {
 
-        every { courseServiceMockk.deleteCourse(any())} just runs
+        every { courseServiceMockk.deleteCourse(any()) } just runs
 
         val updatedCourse = webTestClient.delete()
-            .uri("/v1/courses/{courseId}",100)
+            .uri("/v1/courses/{courseId}", 100)
             .exchange()
             .expectStatus().isNoContent
 
