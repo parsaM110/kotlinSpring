@@ -3,6 +3,7 @@ package com.kotlinspring.kotlinspringgitir.controller
 import com.kotlinspring.kotlinspringgitir.dto.CourseDTO
 import com.kotlinspring.kotlinspringgitir.service.CourseService
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -31,6 +32,11 @@ class CourseController(val courseService: CourseService) {
     @PutMapping("/{course_id}")
     fun updateCourse(@RequestBody courseDTO: CourseDTO, @PathVariable("course_id") courseId: Int) =
         courseService.updateCourse(courseId, courseDTO)
+
+    @DeleteMapping("/{course_id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteCourse(@PathVariable("course_id") courseId: Int) =
+        courseService.deleteCourse(courseId)
 
 
 }
