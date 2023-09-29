@@ -45,6 +45,7 @@
 package com.kotlinspring.kotlinspringgitir.controller
 
 import com.kotlinspring.kotlinspringgitir.dto.CourseDTO
+import com.kotlinspring.kotlinspringgitir.entity.Course
 import com.kotlinspring.kotlinspringgitir.repository.CourseRepository
 import com.kotlinspring.util.courseEntityList
 import org.junit.jupiter.api.Assertions
@@ -111,4 +112,43 @@ class CourseControllerIntgTest {
         Assertions.assertEquals(3,courseDTOs!!.size)
 
     }
+
+    @Test
+    fun updateCourse(){
+
+        //existing Course
+
+        val course = Course(null,
+            "Build RestFul APis using SpringBoot and Kotlin", "Development")
+        courseRepository.save(course)
+
+        //courseId
+
+        val updateCourseDTO = Course(null,
+            "Build RestFul APis using SpringBoot and Kotlin1", "Development")
+
+
+
+        //Update CourseDTO
+
+        val updatedCourse = webTestClient.put()
+            .uri("/v1/courses/{courseId}",course.id)
+            .bodyValue(updateCourseDTO)
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(CourseDTO::class.java)
+            .returnResult()
+            .responseBody
+
+        Assertions.assertEquals("Build RestFul APis using SpringBoot and Kotlin1", updatedCourse!!.name)
+
+
+
+
+
+
+
+
+    }
+
 }
